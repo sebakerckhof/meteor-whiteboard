@@ -9,9 +9,12 @@ meteor
 
 ### Configuring MixMax
 
-Editor url: `/`;
+Editor url: `/`
+
 Resolver url: `/api/v1/resolve`
+
 Activation url: `/api/v1/activate`
+
 
 ### Scripts
 
