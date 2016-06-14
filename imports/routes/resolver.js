@@ -6,16 +6,19 @@ import { Images } from '../api/whiteboards/images';
  */
 ApiV1.addRoute('resolve', {
     post: function () {
-        debugger;
-        const whiteboard = this.bodyParams.id;
-        if(!whiteboard){
+
+        let params;
+        if(this.bodyParams.params){
+            params = JSON.parse(this.bodyParams.params || {});
+        }
+        if(!params || !params._id){
             return {
                 statusCode: 403,
                 body: {status: 'fail', message: 'Invalid request'}
             };
         }
 
-        const image = Images.findOne({whiteboard},{sort:{uploadedAt:-1}});
+        const image = Images.findOne({whiteboard:params._id},{sort:{uploadedAt:-1}});
         if(!image || !image.isUploaded()){
             return {
                 statusCode: 404,
@@ -23,11 +26,14 @@ ApiV1.addRoute('resolve', {
             };
         }
 
-        const result = `<img src="${Meteor.absoluteUrl(image.url({store:'images'}).slice(1))}"/>`;
+        const path = image.url();
+        const result = `<img src="${Meteor.absoluteUrl(path.slice(1))}"/>`;
 
         return {
             statusCode: 200,
-            body: result
+            body: {
+                body:result
+            }
         };
     }
 });

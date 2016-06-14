@@ -7,8 +7,20 @@ import { Whiteboards } from '../api/whiteboards/whiteboards';
  */
 ApiV1.addRoute('activate', {
     post: function () {
-        const _id = this.bodyParams.id;
-        const updated = Whiteboards.update({_id},{$set:{locked:true}});
+        debugger;
+        let params;
+        if(this.bodyParams.params){
+            params = JSON.parse(this.bodyParams.params || {});
+        }
+
+        if(!params || !params._id){
+            return {
+                statusCode: 403,
+                body: {status: 'fail', message: 'Invalid request'}
+            };
+        }
+
+        const updated = Whiteboards.update({_id:params._id},{$set:{locked:true}});
         return {
             statusCode: 200
         };

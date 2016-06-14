@@ -60,12 +60,12 @@ class Whiteboard {
       onError: () => {
         this.loading = false;
         $mdDialog.show(
-          $mdDialog.alert()
-            .clickOutsideToClose(false)
-            .title('Error')
-            .textContent('Could not load whiteboard.')
-            .ariaLabel('error')
-            .ok('Ok')
+            $mdDialog.alert()
+                .clickOutsideToClose(false)
+                .title('Error')
+                .textContent('Could not load whiteboard.')
+                .ariaLabel('error')
+                .ok('Ok')
         );
       }
     });
@@ -145,40 +145,45 @@ class Whiteboard {
 
     this.saving = true;
     this
-      ._createPng()
-      .then(
-        png => new Promise((res, rej)=> {
-          const fsFile = new FS.File(png);
-          fsFile.whiteboard = this.whiteboard._id;
-          Images.insert(fsFile, (err, id) => {
-            if (err) rej(err)
-            else res(id);
-          });
-        })
-      )
-      .then(
-        file => new Promise((res,rej) => {
-              file.on('uploaded',res);
+        ._createPng()
+        .then(png => new Promise((res, rej)=> {
+              const fsFile = new FS.File(png);
+              fsFile.whiteboard = this.whiteboard._id;
+              Images.insert(fsFile, (err, id) => {
+                if (err) rej(err)
+                else res(id);
+              });
+            }))
+        .then(file => new Promise((res,rej) => {
+              file.on('uploaded',()=>{res(file)});
               file.on('error',rej);
-        })
-      )
-      .then(() => {
-          this.$scope.$apply(()=>{
-            this.saving = false;
-            this.changed = false;
-          });
-          Mixmax.done({_id: this.whiteboard._id});
-        }
-      )
-      .catch(err => {
-        this.saving = false;
-        this.$mdToast.show(
-          this.$mdToast.simple()
-            .textContent(`Error while saving the whiteboard: ${err}`)
-            .position('top right')
-            .hideDelay(3000)
-        );
-    });
+            }))
+        .then((file) => new Promise(res => {
+              const check = () => {
+                if(file.hasStored('images')){
+                  res();
+                }else{
+                  setTimeout(check,500);
+                }
+              };
+              check();
+            }))
+        .then(() => {
+              this.$scope.$apply(()=>{
+                this.saving = false;
+                this.changed = false;
+              });
+              Mixmax.done({_id: this.whiteboard._id});
+            })
+        .catch(err => {
+          this.saving = false;
+          this.$mdToast.show(
+              this.$mdToast.simple()
+                  .textContent(`Error while saving the whiteboard: ${err}`)
+                  .position('top right')
+                  .hideDelay(3000)
+          );
+        });
 
 
     //We can't convert on the server ATM
@@ -202,15 +207,15 @@ const name = 'whiteboard';
 
 // create a module
 export default angular.module(name, [
-    angularMeteor,
-    ngMaterial,
-    drawingPane.name,
-    renderPane.name
-  ])
-  .component(name, {
-    bindings: {
-      whiteboardId: '<',
-    },
-    template,
-    controller: Whiteboard
-  });
+      angularMeteor,
+      ngMaterial,
+      drawingPane.name,
+      renderPane.name
+    ])
+    .component(name, {
+      bindings: {
+        whiteboardId: '<',
+      },
+      template,
+      controller: Whiteboard
+    });
