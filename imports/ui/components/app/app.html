@@ -1,0 +1,6 @@
+<div ng-if="!$ctrl.id" layout="row" layout-sm="column" layout-align="center center" class="loader">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+</div>
+<div ng-if="$ctrl.id">
+    <whiteboard whiteboard-id="$ctrl.id"></whiteboard>
+</div>

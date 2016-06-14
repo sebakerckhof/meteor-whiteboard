@@ -1,0 +1,41 @@
+# Meteor packages used by this project one per line.
+# Check this file (and the other files in this directory) into your repository.
+#
+# 'meteor add' and 'meteor remove' will edit this file for you
+# but you can also edit it by hand.
+
+# meteor libraries
+meteor-base
+mobile-experience
+mongo
+check
+tracker
+
+# standard libraries
+jquery
+underscore
+es5-shim
+pbastowski:angular-babel@1.3.6
+fourseven:scss@3.4.3
+mdg:validated-method
+
+# ui
+reactive-dict
+reactive-var
+
+# data
+aldeed:simple-schema@1.5.3
+matb33:collection-hooks@0.8.1
+
+# production
+juliancwirko:postcss@1.1.1
+standard-minifier-js
+ddp-rate-limiter
+
+urigo:static-templates
+planettraining:material-design-icons
+
+nimble:restivus@0.8.10
+
+cfs:standard-packages@0.3.0
+cfs:filesystem@0.1.2

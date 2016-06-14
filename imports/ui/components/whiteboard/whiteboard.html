@@ -1,0 +1,25 @@
+<div ng-if="$ctrl.loading" layout="row" layout-align="center center" class="loader">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+</div>
+<div ng-if="!$ctrl.loading && $ctrl.whiteboard">
+
+    <div class="controls">
+        <md-button class="md-primary md-fab md-fab-top-left" aria-label="Toggle mode" ng-click="$ctrl.toggleMode()">
+            <md-icon ng-if="$ctrl.eraseMode" md-svg-icon="editor:ic_mode_edit_24px"></md-icon>
+            <md-icon ng-if="!$ctrl.eraseMode" md-svg-icon="action:ic_delete_24px"></md-icon>
+        </md-button>
+
+        <md-button ng-disabled="$ctrl.saving" class="md-primary md-fab md-fab-bottom-right" aria-label="Save" ng-click="$ctrl.save()">
+            <md-tooltip md-direction="top">
+                Save
+            </md-tooltip>
+            <md-icon md-svg-icon="action:ic_done_24px" ng-if="!$ctrl.saving"></md-icon>
+            <md-icon md-svg-icon="action:ic_autorenew_24px" class="spin-icon" ng-if="$ctrl.saving" ></md-icon>
+        </md-button>
+    </div>
+
+
+    <drawing-pane ng-show="!$ctrl.eraseMode" on-new-path="$ctrl.savePath(d,color,size,bb)"></drawing-pane>
+    <render-pane paths="$ctrl.paths" on-select="$ctrl.removePath(id)" highlight="true"></render-pane>
+
+</div>

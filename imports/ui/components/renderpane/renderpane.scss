@@ -1,0 +1,10 @@
+render-pane{
+  > svg{
+    &.highlight{
+      cursor:pointer;
+      > path:hover{
+        stroke:pink !important;
+      }
+    }
+  }
+}

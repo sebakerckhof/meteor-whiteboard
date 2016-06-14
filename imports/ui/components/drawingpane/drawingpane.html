@@ -1,0 +1,16 @@
+<md-fab-speed-dial class="md-fab-top-right md-fling" md-direction="left">
+    <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab md-warn"  ng-style="{'background-color':$ctrl.selectedColor}">
+            <md-tooltip md-direction="bottom" md-visible="$ctrl.tooltipVisible" md-autohide="false">
+                Select color
+            </md-tooltip>
+            <md-icon md-svg-icon="image:ic_color_lens_24px"></md-icon>
+        </md-button>
+    </md-fab-trigger>
+    <md-fab-actions>
+        <md-button ng-repeat="color in $ctrl.colors" aria-label="color" class="md-fab md-raised md-mini" ng-click="$ctrl.selectedColor = color">
+            <md-icon md-svg-icon="image:ic_lens_24px" ng-style="{'color':color}"></md-icon>
+        </md-button>
+    </md-fab-actions>
+</md-fab-speed-dial>
+<canvas resize></canvas>
