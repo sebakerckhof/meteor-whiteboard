@@ -14,6 +14,19 @@ import renderPane from '../renderpane/renderpane';
 
 import './whiteboard.scss';
 
+
+function getParameterByName(name, url) {
+    if (!url) {
+      url = window.location.href;
+    }
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 /**
  * A whiteboard consists of 2 panes:
  *  one containing a canvas for drawing new paths
@@ -34,6 +47,7 @@ class Whiteboard {
     this.loading = true;
     this.saving = false;
     this.changed = false;
+
 
     /*
      * Set up subscriptions and query data

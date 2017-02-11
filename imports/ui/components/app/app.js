@@ -18,13 +18,14 @@ class App{
         'ngInject';
         $reactive(this).attach($scope);
 
-        let data = $location.search().data;
-        if(data){
-            data = JSON.parse(data);
-        }
+        let id = $location.search().id;
+        // if(data){
+        //     data = JSON.parse(data);
+        // }
 
-        if(!data || !data._id){
+        if(!id){
             this.call('whiteboards.create',(err,id) => {
+                console.log("ID",id);
                 if(err){
                     $mdToast.show(
                       $mdToast.simple()
@@ -38,7 +39,7 @@ class App{
 
             });
         }else{
-            this.id = data._id;
+            this.id = id;
         }
     }
 }

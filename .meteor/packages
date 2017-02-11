@@ -15,8 +15,8 @@ tracker
 jquery
 underscore
 es5-shim
-pbastowski:angular-babel@1.3.6
-fourseven:scss@3.4.3
+pbastowski:angular-babel@1.3.7
+fourseven:scss@3.13.0
 mdg:validated-method
 
 # ui
@@ -39,3 +39,4 @@ nimble:restivus@0.8.10
 
 cfs:standard-packages@0.3.0
 cfs:filesystem@0.1.2
+npm-bcrypt
